@@ -4,10 +4,11 @@ import backgroundImg from '../../assets/sign-up-background.png';
 
 export const Container = styled.div`
   height: 100vh;
-  display: flex;
-  align-items: center;
+  flex:1;
+
   @media(max-width: 900px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -23,7 +24,12 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 0 50px;
   max-width: 700px;
+
+  @media(max-width: 900px) {
+    margin: 0px; 
+  }
 `;
 
 const appearFromRight = keyframes`
@@ -39,11 +45,12 @@ const appearFromRight = keyframes`
 
 export const AnimatedContainer = styled.div`
   display: flex;
+  flex:1;
   flex-direction: column;
   place-content: center;
   align-items: center;
 
-  animation: ${appearFromRight} 1s;
+  // animation: ${appearFromRight} 1s;
 
   form {
     margin: 80px 0;

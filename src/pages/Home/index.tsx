@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from '../../components/Button';
-import { useAuth } from '../../context/auth';
 import { Container, Content, Loading, VoteOptions } from './styles';
 import api from '../../services/api';
 import { useCallback } from 'react';
@@ -34,7 +33,7 @@ const decodeHTML = (text: string): string => {
 }
 
 const Dashboard: React.FC = () => {
-  const {addToast} = useToast();
+  const { addToast } = useToast();
   const [showExemples, setShowExamples] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [reloadComment, setReloadComment] = useState(false);
@@ -45,10 +44,11 @@ const Dashboard: React.FC = () => {
     commentContent: '',
     replyTo: '',
   });
-  const showReply = commentData.replyTo!==' ' && commentData.replyTo !== '';
+  const showReply = commentData.replyTo !== ' ' && commentData.replyTo !== '';
 
   const handleVote = useCallback(async (vote: string) => {
     try {
+      setIsLoading(true);
       const response = await api.post('/votes', {
         commentId: commentData.commentId,
         vote
@@ -56,13 +56,14 @@ const Dashboard: React.FC = () => {
       console.log(response);
 
       setReloadComment(!reloadComment);
-    } catch(error) {
+      setIsLoading(false);
+    } catch (error) {
       addToast({
         title: 'Falha ao enviar o voto',
         type: 'error'
       })
     }
-  }, [reloadComment, commentData])
+  }, [reloadComment, commentData, addToast])
 
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
@@ -84,65 +85,66 @@ const Dashboard: React.FC = () => {
 
     loadInfo();
   }, [reloadComment]);
+
   return (
     <>
-    <Header/>
-    <Container>
-      <Content>
-        <header>
-          <strong>Conceito de sexismo</strong>
-        </header>
-        <p>
-          Para classificar o comentário apresentado, considere que sexismo é todo o discurso com a intenção de ofender, diminuir, oprimir ou agredir pessoas do gênero feminino.
+      <Header />
+      <Container>
+        <Content>
+          <header>
+            <strong>Conceito de sexismo</strong>
+          </header>
+          <p>
+            Para classificar o comentário apresentado, considere que sexismo é todo o discurso com a intenção de ofender, diminuir, oprimir ou agredir pessoas do gênero feminino.
         </p>
-        {showExemples && (
-          <div>
-            <p>
-              "Deveria sair da internet e ir pra cozinha."
+          {showExemples && (
+            <div>
+              <p>
+                "Deveria sair da internet e ir pra cozinha."
             </p>
-            <p>
-              "As pessoas só estão falando bem dela porque é mulher."
+              <p>
+                "As pessoas só estão falando bem dela porque é mulher."
             </p>
-            <p>
-              "Essa vagabunda não devia estar falando nada."
+              <p>
+                "Essa vagabunda não devia estar falando nada."
             </p>
-          </div>
-        )}
-         <button id='show-more' onClick={() => setShowExamples(!showExemples)}>
-          { showExemples ? 'Esconder exemplos' : 'Mostrar exemplos'}
-        </button>
-      </Content>
-      <Content>
-        <header>
-          <strong>Título da notícia</strong>
-        </header>
-        { isLoading
-            ? <Loading/>
+            </div>
+          )}
+          <button id='show-more' onClick={() => setShowExamples(!showExemples)}>
+            {showExemples ? 'Esconder exemplos' : 'Mostrar exemplos'}
+          </button>
+        </Content>
+        <Content>
+          <header>
+            <strong>Título da notícia</strong>
+          </header>
+          {isLoading
+            ? <Loading />
             : <>
               <h2>{commentData.newsTitle}</h2>
-              Leia o conteúdo da notícia em <a href={commentData.newsUrl}>{commentData.newsUrl.substring(0,20)}...</a>
-        </>}
-      </Content>
-      <Content>
-        <header>
-          <strong>Comentário em avaliação</strong>
-        </header>
-        { isLoading
-          ? <Loading/>
-          : <p>
-            "{commentData.commentContent}"
+              Leia o conteúdo da notícia em <a href={commentData.newsUrl}>{commentData.newsUrl.substring(0, 20)}...</a>
+            </>}
+        </Content>
+        <Content>
+          <header>
+            <strong>Comentário em avaliação</strong>
+          </header>
+          {isLoading
+            ? <Loading />
+            : <p>
+              "{commentData.commentContent}"
 
           </p>
-        }
-        { showReply &&
-          <div>
-            <small>
-              O comentário acima foi uma resposta ao comentário "{commentData.replyTo}"
+          }
+          {showReply &&
+            <div>
+              <small>
+                O comentário acima foi uma resposta ao comentário "{commentData.replyTo}"
             </small>
-          </div>
-        }
-        {
-          !isLoading &&
+            </div>
+          }
+          {
+            !isLoading &&
             <>
               <p>Considerando o conceito de sexismo apresentado acima, em qual das classes abaixo você colocaria o <strong>comentário em avaliação</strong>?</p>
               <VoteOptions>
@@ -150,12 +152,12 @@ const Dashboard: React.FC = () => {
                 <Button onClick={() => handleVote('n')}>Não sexista</Button>
               </VoteOptions>
             </>
-        }
-      </Content>
+          }
+        </Content>
 
 
-    </Container>
-  </>
+      </Container>
+    </>
   )
 };
 

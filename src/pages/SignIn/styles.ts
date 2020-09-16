@@ -1,13 +1,14 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
-import { animated } from 'react-spring';
 import backgroundImg from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
   height: 100vh;
-  display: flex;
+  flex:1;
+  
   @media(max-width: 900px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -25,6 +26,10 @@ export const Content = styled.div`
   width: 100%;
   margin: 0 50px;
   max-width: 700px;
+
+  @media(max-width: 900px) {
+    margin: 0px; 
+  }
 `;
 
 const appearFromLeft = keyframes`
@@ -41,10 +46,11 @@ const appearFromLeft = keyframes`
 export const AnimatedContainer = styled.div`
   display: flex;
   flex-direction: column;
-  place-content: center;
+  justify-content: space-arround;
   align-items: center;
+  flex:1;
 
-  animation: ${appearFromLeft} 1s;
+  // animation: ${appearFromLeft} 1s;
 
   form {
     margin: 80px 0;

@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCalendar } from 'react-icons/fi';
+
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -72,7 +73,7 @@ const SignUp: React.FC = () => {
         });
       }
     }
-  }, [gender]);
+  }, [gender, addToast, history]);
 
   return (
     <Container>

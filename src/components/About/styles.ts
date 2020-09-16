@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   flex-direction: column;
+  flex:1;
   align-items: center;
   width: auto;
   max-width: 900px;
@@ -10,7 +11,7 @@ export const Container = styled.div`
 
   div {
     border: 1px solid #f5f5fa;
-    background: #f5f5fa;
+    background: #fff;
     border-radius: 10px;
     margin: 10px 0;
     padding: 0 20px;
@@ -28,6 +29,7 @@ export const Container = styled.div`
   @media(max-width: 900px) {
     flex-direction: column;
     min-width: auto;
+    flex1;
     margin: 20px;
   }
 `;

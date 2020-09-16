@@ -8,7 +8,7 @@ const Header:React.FC = () => {
   const { signOut } = useAuth();
   return (<Container>
     <img width="200px" src={logoImg} alt="SexismResearch" />
-    <a onClick={signOut}>Logout</a>
+    <a href='/' onClick={signOut}>Logout</a>
   </Container>)
 };
 
