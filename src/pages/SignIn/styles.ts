@@ -6,7 +6,6 @@ import backgroundImg from '../../assets/sign-in-background.png';
 export const Container = styled.div`
   height: 100vh;
   display: flex;
-  align-items: center;
   @media(max-width: 900px) {
     flex-direction: column;
   }
@@ -24,6 +23,7 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 0 50px;
   max-width: 700px;
 `;
 

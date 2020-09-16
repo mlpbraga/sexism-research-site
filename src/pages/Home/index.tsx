@@ -108,7 +108,7 @@ const Dashboard: React.FC = () => {
             </p>
           </div>
         )}
-         <button onClick={() => setShowExamples(!showExemples)}>
+         <button id='show-more' onClick={() => setShowExamples(!showExemples)}>
           { showExemples ? 'Esconder exemplos' : 'Mostrar exemplos'}
         </button>
       </Content>
@@ -131,6 +131,7 @@ const Dashboard: React.FC = () => {
           ? <Loading/>
           : <p>
             "{commentData.commentContent}"
+
           </p>
         }
         { showReply &&
@@ -140,13 +141,19 @@ const Dashboard: React.FC = () => {
             </small>
           </div>
         }
+        {
+          !isLoading &&
+            <>
+              <p>Considerando o conceito de sexismo apresentado acima, em qual das classes abaixo você colocaria o <strong>comentário em avaliação</strong>?</p>
+              <VoteOptions>
+                <Button onClick={() => handleVote('s')}>Sexista</Button>
+                <Button onClick={() => handleVote('n')}>Não sexista</Button>
+              </VoteOptions>
+            </>
+        }
       </Content>
 
-      <p>Considerando o conceito de sexismo apresentado acima, em qual das classes abaixo você colocaria o <strong>comentário em avaliação</strong>?</p>
-      <VoteOptions>
-        <Button onClick={() => handleVote('s')}>Sexista</Button>
-        <Button onClick={() => handleVote('n')}>Não sexista</Button>
-      </VoteOptions>
+
     </Container>
   </>
   )

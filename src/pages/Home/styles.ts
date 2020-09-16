@@ -5,7 +5,7 @@ import loadingSpinner from '../../assets/loading.svg';
 export const Container = styled.div`
   justify-content: space-between;
   margin: 20px auto 0;
-  padding: 0 20px;
+  padding: 20px;
   text-align: center;
   align-items: center;
   max-width: 900px;
@@ -17,9 +17,10 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  background: #f5f5fa;
+  background: #fff;
   font-size: 15px;
   border-radius: 10px;
+  border: 2px solid #eeeef6;
   padding: 0 0 20px;
   margin: 15px;
 
@@ -50,7 +51,7 @@ export const Content = styled.div`
   div {
     margin: 15px 15px 0;
   }
-  button {
+  #show-more {
     margin-top: 20px;
     color: #b05c84;
     font-size: 15px;
