@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Button from '../../components/Button';
 import { Container, Content, Loading, VoteOptions } from './styles';
 import api from '../../services/api';
-import { useCallback } from 'react';
+
 import { useToast } from '../../context/toast';
 import Header from '../../components/Header';
-
 
 interface CommentData {
   commentId: number;
@@ -27,10 +26,10 @@ interface CommentsResponse {
 }
 
 const decodeHTML = (text: string): string => {
-  var txt = document.createElement("textarea");
+  const txt = document.createElement('textarea');
   txt.innerHTML = text;
   return txt.value;
-}
+};
 
 const Dashboard: React.FC = () => {
   const { addToast } = useToast();
@@ -46,24 +45,26 @@ const Dashboard: React.FC = () => {
   });
   const showReply = commentData.replyTo !== ' ' && commentData.replyTo !== '';
 
-  const handleVote = useCallback(async (vote: string) => {
-    try {
-      setIsLoading(true);
-      const response = await api.post('/votes', {
-        commentId: commentData.commentId,
-        vote
-      });
-      console.log(response);
+  const handleVote = useCallback(
+    async (vote: string) => {
+      try {
+        setIsLoading(true);
+        await api.post('/votes', {
+          commentId: commentData.commentId,
+          vote,
+        });
 
-      setReloadComment(!reloadComment);
-      setIsLoading(false);
-    } catch (error) {
-      addToast({
-        title: 'Falha ao enviar o voto',
-        type: 'error'
-      })
-    }
-  }, [reloadComment, commentData, addToast])
+        setReloadComment(!reloadComment);
+        setIsLoading(false);
+      } catch (error) {
+        addToast({
+          title: 'Falha ao enviar o voto',
+          type: 'error',
+        });
+      }
+    },
+    [reloadComment, commentData, addToast],
+  );
 
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
@@ -76,12 +77,12 @@ const Dashboard: React.FC = () => {
           newsUrl: comment.News.link,
           commentContent: decodeHTML(comment.content),
           replyTo: decodeHTML(comment.replyTo),
-        })
+        });
         setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     loadInfo();
   }, [reloadComment]);
@@ -95,22 +96,22 @@ const Dashboard: React.FC = () => {
             <strong>Conceito de sexismo</strong>
           </header>
           <p>
-            Para classificar o comentário apresentado, considere que sexismo é todo o discurso com a intenção de ofender, diminuir, oprimir ou agredir pessoas do gênero feminino.
-        </p>
+            Para classificar o comentário apresentado, considere que sexismo é
+            todo o discurso com a intenção de ofender, diminuir, oprimir ou
+            agredir pessoas do gênero feminino.
+          </p>
           {showExemples && (
             <div>
-              <p>
-                "Deveria sair da internet e ir pra cozinha."
-            </p>
-              <p>
-                "As pessoas só estão falando bem dela porque é mulher."
-            </p>
-              <p>
-                "Essa vagabunda não devia estar falando nada."
-            </p>
+              <p>"Deveria sair da internet e ir pra cozinha."</p>
+              <p>"As pessoas só estão falando bem dela porque é mulher."</p>
+              <p>"Essa vagabunda não devia estar falando nada."</p>
             </div>
           )}
-          <button id='show-more' onClick={() => setShowExamples(!showExemples)}>
+          <button
+            type="button"
+            id="show-more"
+            onClick={() => setShowExamples(!showExemples)}
+          >
             {showExemples ? 'Esconder exemplos' : 'Mostrar exemplos'}
           </button>
         </Content>
@@ -118,47 +119,48 @@ const Dashboard: React.FC = () => {
           <header>
             <strong>Título da notícia</strong>
           </header>
-          {isLoading
-            ? <Loading />
-            : <>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
               <h2>{commentData.newsTitle}</h2>
-              Leia o conteúdo da notícia em <a href={commentData.newsUrl}>{commentData.newsUrl.substring(0, 20)}...</a>
-            </>}
+              Leia o conteúdo da notícia em{' '}
+              <a href={commentData.newsUrl}>
+                {commentData.newsUrl.substring(0, 20)}...
+              </a>
+            </>
+          )}
         </Content>
         <Content>
           <header>
             <strong>Comentário em avaliação</strong>
           </header>
-          {isLoading
-            ? <Loading />
-            : <p>
-              "{commentData.commentContent}"
-
-          </p>
-          }
-          {showReply &&
+          {isLoading ? <Loading /> : <p>"{commentData.commentContent}"</p>}
+          {showReply && (
             <div>
               <small>
-                O comentário acima foi uma resposta ao comentário "{commentData.replyTo}"
-            </small>
+                O comentário acima foi uma resposta ao comentário "
+                {commentData.replyTo}"
+              </small>
             </div>
-          }
-          {
-            !isLoading &&
+          )}
+          {!isLoading && (
             <>
-              <p>Considerando o conceito de sexismo apresentado acima, em qual das classes abaixo você colocaria o <strong>comentário em avaliação</strong>?</p>
+              <p>
+                Considerando o conceito de sexismo apresentado acima, em qual
+                das classes abaixo você colocaria o{' '}
+                <strong>comentário em avaliação</strong>?
+              </p>
               <VoteOptions>
                 <Button onClick={() => handleVote('s')}>Sexista</Button>
                 <Button onClick={() => handleVote('n')}>Não sexista</Button>
               </VoteOptions>
             </>
-          }
+          )}
         </Content>
-
-
       </Container>
     </>
-  )
+  );
 };
 
 export default Dashboard;

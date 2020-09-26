@@ -32,7 +32,7 @@ export const Content = styled.div`
     margin-bottom: 10px;
 
     strong {
-      color: #3D3D4D;
+      color: #3d3d4d;
     }
   }
   h2 {
@@ -43,7 +43,7 @@ export const Content = styled.div`
     padding: 0 20px;
   }
   a {
-    color: #b05c84
+    color: #b05c84;
   }
   small {
     color: #a6a6a6;

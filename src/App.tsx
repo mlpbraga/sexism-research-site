@@ -7,7 +7,7 @@ import AppProvider from './context';
 const App: React.FC = () => (
   <>
     <AppProvider>
-      <BrowserRouter basename="sexism-research">
+      <BrowserRouter basename="/">
         <Routes />
       </BrowserRouter>
     </AppProvider>

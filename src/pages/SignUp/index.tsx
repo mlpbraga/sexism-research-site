@@ -1,5 +1,11 @@
-import React, { useCallback, useRef } from 'react';
-import { FiArrowLeft, FiUser, FiMail, FiLock, FiCalendar } from 'react-icons/fi';
+import React, { useCallback, useRef, useState } from 'react';
+import {
+  FiArrowLeft,
+  FiUser,
+  FiMail,
+  FiLock,
+  FiCalendar,
+} from 'react-icons/fi';
 
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -16,7 +22,6 @@ import { getValidationErrors } from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { useToast } from '../../context/toast';
 import About from '../../components/About';
-import { useState } from 'react';
 
 interface SignupFormData {
   name: string;
@@ -31,49 +36,51 @@ const SignUp: React.FC = () => {
   const history = useHistory();
   const { addToast } = useToast();
 
-  const handleSubmit = useCallback(async (data: SignupFormData) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório'),
-        birth: Yup.date().required('Data de nascimento obrigatória'),
-        gender: Yup.string().required('Gênero obrigatório'),
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().min(
-          6,
-          'A senha precisa ter no mínimo 6 dígitos',
-        ),
-      });
-      const body = {
-        ...data,
-        gender,
-        username: data.email,
-        birth: new Date(data.birth)
-      };
-      await schema.validate(body, { abortEarly: false });
-      console.log(body);
-      await api.post('/users', body);
-      addToast({
-        title: 'Cadastro realizado com sucesso',
-        description: 'Você já pode fazer seu login',
-        type: 'success',
-      });
-      history.push('/');
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(error);
-        formRef.current?.setErrors(errors);
-      } else {
-        addToast({
-          type: 'error',
-          title: 'Erro no cadastro',
-          description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
+  const handleSubmit = useCallback(
+    async (data: SignupFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          birth: Yup.date().required('Data de nascimento obrigatória'),
+          gender: Yup.string().required('Gênero obrigatório'),
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().min(
+            6,
+            'A senha precisa ter no mínimo 6 dígitos',
+          ),
         });
+        const body = {
+          ...data,
+          gender,
+          username: data.email,
+          birth: new Date(data.birth),
+        };
+        await schema.validate(body, { abortEarly: false });
+        await api.post('/users', body);
+        addToast({
+          title: 'Cadastro realizado com sucesso',
+          description: 'Você já pode fazer seu login',
+          type: 'success',
+        });
+        history.push('/');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+          formRef.current?.setErrors(errors);
+        } else {
+          addToast({
+            type: 'error',
+            title: 'Erro no cadastro',
+            description: 'Ocorreu um erro ao fazer cadastro, tente novamente',
+          });
+        }
       }
-    }
-  }, [gender, addToast, history]);
+    },
+    [gender, addToast, history],
+  );
 
   return (
     <Container>
@@ -97,18 +104,30 @@ const SignUp: React.FC = () => {
               type="date"
             />
             <GenderInput>
-              <label className='radio-label'>Gênero  </label>
-              <div className='signup-input-radio'>
-                <input type="radio" name='gender' value='fem' checked={gender==='fem'} onChange={(event) => {
-                  console.log(event.target.value);
-                  setGender(event.target.value)}}/>
-                <label className='radio-label'> Feminino </label>
+              <label className="radio-label">Gênero </label>
+              <div className="signup-input-radio">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="fem"
+                  checked={gender === 'fem'}
+                  onChange={event => {
+                    setGender(event.target.value);
+                  }}
+                />
+                <label className="radio-label"> Feminino </label>
               </div>
-              <div className='signup-input-radio'>
-                <input type="radio" name='gender' value='masc' checked={gender==='masc'} onChange={(event) => {
-                  console.log(event.target.value);
-                  setGender(event.target.value)}}/>
-                <label className='radio-label'> Masculino </label>
+              <div className="signup-input-radio">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="masc"
+                  checked={gender === 'masc'}
+                  onChange={event => {
+                    setGender(event.target.value);
+                  }}
+                />
+                <label className="radio-label"> Masculino </label>
               </div>
             </GenderInput>
             <Button type="submit">Cadastrar</Button>
@@ -119,7 +138,7 @@ const SignUp: React.FC = () => {
           </Link>
         </AnimatedContainer>
       </Content>
-      <About/>
+      <About />
     </Container>
   );
 };

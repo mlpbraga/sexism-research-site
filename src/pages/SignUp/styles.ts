@@ -4,9 +4,10 @@ import backgroundImg from '../../assets/sign-up-background.png';
 
 export const Container = styled.div`
   height: 100vh;
-  flex:1;
+  flex-direction: row;
+  display: flex;
 
-  @media(max-width: 900px) {
+  @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;
   }
@@ -27,8 +28,8 @@ export const Content = styled.div`
   margin: 0 50px;
   max-width: 700px;
 
-  @media(max-width: 900px) {
-    margin: 0px; 
+  @media (max-width: 900px) {
+    margin: 0px;
   }
 `;
 
@@ -91,7 +92,6 @@ export const AnimatedContainer = styled.div`
     }
   }
 `;
-
 
 export const GenderInput = styled.div`
   background: #f5f5fa;
