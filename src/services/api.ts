@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const baseURL = 'http://sexism-app-351908187.us-east-1.elb.amazonaws.com/';
+// const baseURL = 'http://localhost:4444/';
+
 const token = localStorage.getItem('@SexismResearch:token');
 const api = axios.create({
   baseURL,
