@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  flex-direction: row;
-  flex: 1;
+  flex-direction: column;
+  display: flex;
   align-items: center;
   width: auto;
   max-width: 900px;
@@ -18,18 +18,18 @@ export const Container = styled.div`
 
     h1 {
       margin-bottom: 25px;
-      color: #DC73A5;
+      color: #dc73a5;
     }
 
     p {
-      margin-bottom: 15px
+      margin-bottom: 15px;
     }
   }
 
-  @media(max-width: 900px) {
+  @media (max-width: 900px) {
     flex-direction: column;
     min-width: auto;
-    flex1;
+    flex: 1;
     margin: 20px;
   }
 `;

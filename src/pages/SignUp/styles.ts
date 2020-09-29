@@ -3,10 +3,12 @@ import { shade } from 'polished';
 import backgroundImg from '../../assets/sign-up-background.png';
 
 export const Container = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
   flex-direction: row;
   display: flex;
-
+  @media (min-width: 901px) {
+    max-height: 900px;
+  }
   @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;

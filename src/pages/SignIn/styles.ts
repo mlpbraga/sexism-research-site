@@ -3,13 +3,13 @@ import { shade } from 'polished';
 import backgroundImg from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
-  height: 100vh;
   display: flex;
   flex-direction: row;
-
+  @media (min-width: 901px) {
+    max-height: 800px;
+  }
   @media (max-width: 900px) {
     flex-direction: column;
-    align-items: center;
   }
 `;
 
@@ -73,5 +73,6 @@ export const Content = styled.div`
   @media (max-width: 900px) {
     margin: 0px;
     flex-direction: column;
+    flex: 1;
   }
 `;
