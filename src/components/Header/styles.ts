@@ -2,23 +2,27 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   width: 100%;
-  max-width: 900px;
-  margin: 20px auto 0;
-  font-size: 22px;
-  font-weight: bold;
   color: #fff;
-  display: flex;
-  text-align: center;
-  justify-content: space-around;
-  align-items: center;
+  background-color: #e6cbd8;
+
   img {
   }
   a {
     cursor: pointer;
     text-decoration: underline;
-    align-self: flex-end;
     font-weight: normal;
     font-size: 16px;
-    color: #DC73A5;
+    color: #dc73a5;
   }
-`
+`;
+
+export const HeaderContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  font-size: 22px;
+  margin: 0 auto;
+  padding: 5px 20px;
+  font-weight: bold;
+`;

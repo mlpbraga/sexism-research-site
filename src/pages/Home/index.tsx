@@ -6,6 +6,7 @@ import api from '../../services/api';
 
 import { useToast } from '../../context/toast';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface CommentData {
   commentId: number;
@@ -158,6 +159,7 @@ const Dashboard: React.FC = () => {
             </>
           )}
         </Content>
+        <Footer />
       </Container>
     </>
   );
