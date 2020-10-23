@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { Container } from './styles';
 
@@ -9,9 +8,9 @@ const About: React.FC = () => (
       <h1> O que é o projeto?</h1>
       <p>
         Coletamos diversos comentários em notícias do G1 e do UOL, afim de
-        construir uma base de dados para a nossa pesquisa e queremos usar essa
-        base de dados para fazer com que um programa seja capaz de identificar
-        automaticamente se um comentário feito é sexista ou não. Mas para que
+        construir uma base de dados para a nossa pesquisa e queremos usar esses
+        dados para fazer com que um programa seja capaz de identificar
+        automaticamente se um comentário é sexista ou não. Mas para que
         isso seja possível, precisamos ensinar ao programa
         <strong> o que são comentários sexistas</strong>, e é ai que você entra
         :)
@@ -39,13 +38,12 @@ const About: React.FC = () => (
     <div>
       <h1> Como funciona?</h1>
       <p>
-        Cada pessoa que se cadastra aqui se torna um rotulador e passa a ter
-        acesso aos comentários que da nossa base de dados. Alguns comentários
+        Cada pessoa que se cadastra aqui será um rotulador e terá
+        acesso aos comentários da nossa base de dados. Alguns comentários
         são selecionados e exibidos para o rotulador e ele deve indicar se os
-        comentário exibidos são sexistas ou não. A base de dados tem cerca de
-        3200 comentários (por enquanto)e os rotuladores podem classificar
-        quantos comentários quiserem, e não são obrigados a classificar todo
-        eles.
+        comentário exibidos são sexistas ou não. A base tem cerca de
+        3200 comentários (por enquanto) e os rotuladores podem classificar
+        quantos comentários quiserem sem a obrigação de rotular todos eles.
       </p>
       <p>
         O rótulo final de cada comentário é atribuído utilizando a média dos
