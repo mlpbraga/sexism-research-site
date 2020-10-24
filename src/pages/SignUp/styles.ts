@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
-import backgroundImg from '../../assets/sign-up-background.png';
+import backgroundImg from '../../assets/sex.png';
 
 export const Container = styled.div`
   /* height: 100vh; */
@@ -16,9 +16,17 @@ export const Container = styled.div`
 `;
 
 export const Background = styled.div`
-  flex: 1;
-  background: url(${backgroundImg}) no-repeat center;
-  background-size: cover;
+  position: absolute;
+  background-size: 800px;
+  width: 100%;
+  z-index: -2;
+  height: 100%;
+  opacity: 0.09;
+  background: url(${backgroundImg}) no-repeat left bottom;
+
+  @media (max-width: 900px) {
+    width: 0;
+  }
 `;
 
 export const Content = styled.div`

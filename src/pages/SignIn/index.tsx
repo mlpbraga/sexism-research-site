@@ -11,7 +11,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import About from '../../components/About';
 
-import { Container, Content } from './styles';
+import { Background, Container, Content } from './styles';
 import { getValidationErrors } from '../../utils/getValidationErrors';
 import { useAuth } from '../../context/auth';
 import { useToast } from '../../context/toast';
@@ -65,6 +65,7 @@ const SignIn: React.FC = () => {
   );
   return (
     <Container>
+      <Background />
       <Content>
         <img width="300px" src={logoImg} alt="SexismResearch" />
         <Form ref={formRef} onSubmit={handleSubmit}>
