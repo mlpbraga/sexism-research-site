@@ -126,7 +126,7 @@ const Dashboard: React.FC = () => {
             <>
               <h2>{commentData.newsTitle}</h2>
               Leia o conteúdo da notícia em{' '}
-              <a target='_blank' href={commentData.newsUrl}>
+              <a target='_blank' rel='noopener noreferrer' href={commentData.newsUrl}>
                 {commentData.newsUrl.substring(0, 20)}...
               </a>
             </>
