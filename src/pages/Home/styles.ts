@@ -14,6 +14,10 @@ export const Container = styled.div`
     margin: 20px auto 0;
     text-align: center;
   }
+  @media (max-width: 900px) {
+    margin: 5px auto 0;
+    padding: 5px;
+  }
 `;
 
 export const Content = styled.div`
@@ -51,6 +55,7 @@ export const Content = styled.div`
   div {
     margin: 15px 15px 0;
   }
+
   #show-more {
     margin-top: 20px;
     color: #b05c84;
@@ -58,6 +63,11 @@ export const Content = styled.div`
     text-decoration: underline;
     background: transparent;
     border: none;
+  }
+
+  @media (max-width: 900px) {
+    margin: 15px 0;
+    padding: 0 0 10px;
   }
 `;
 
@@ -70,10 +80,24 @@ export const Loading = styled.div`
 
 export const VoteOptions = styled.div`
   display: flex;
+  margin: 15px;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   button {
     max-width: 200px;
+  }
+`;
+
+export const SkipOption = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px auto 0;
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+
+  a {
+    text-align: 'center';
   }
 `;

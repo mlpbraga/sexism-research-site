@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Button from '../../components/Button';
-import { Container, Content, Loading, VoteOptions } from './styles';
+import { Container, Content, Loading, VoteOptions, SkipOption } from './styles';
 import api from '../../services/api';
 
 import { useToast } from '../../context/toast';
@@ -126,7 +126,7 @@ const Dashboard: React.FC = () => {
             <>
               <h2>{commentData.newsTitle}</h2>
               Leia o conteúdo da notícia em{' '}
-              <a href={commentData.newsUrl}>
+              <a target='_blank' href={commentData.newsUrl}>
                 {commentData.newsUrl.substring(0, 20)}...
               </a>
             </>
@@ -156,6 +156,10 @@ const Dashboard: React.FC = () => {
                 <Button onClick={() => handleVote('s')}>Sexista</Button>
                 <Button onClick={() => handleVote('n')}>Não sexista</Button>
               </VoteOptions>
+
+              <SkipOption>
+                <a href='/'>Pular por enquanto...</a>
+              </SkipOption>
             </>
           )}
         </Content>
