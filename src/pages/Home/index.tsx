@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
       try {
-        const response = await api.get<CommentsResponse>('/comments');
+        const response = await api.get<CommentsResponse>('/comments/random');
         const comment = response.data;
         setCommentData({
           commentId: comment.commentId,
