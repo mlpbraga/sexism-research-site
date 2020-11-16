@@ -11,7 +11,7 @@ interface Props extends InputProps {
 }
 
 const InputMask: React.FC<Props> = ({ name, icon: Icon, ...rest }) => {
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -19,8 +19,7 @@ const InputMask: React.FC<Props> = ({ name, icon: Icon, ...rest }) => {
 
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
-
-    setIsFilled(!!inputRef.current);
+    setIsFilled(!!inputRef.current?.value);
   }, []);
 
   const handleInpuFocus = useCallback(() => setIsFocused(true), []);
