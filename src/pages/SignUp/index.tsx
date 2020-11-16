@@ -16,8 +16,15 @@ import logoImg from '../../assets/logo.png';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import InputMask from '../../components/InputMask';
 
-import { Container, Content, GenderInput, AnimatedContainer, Background } from './styles';
+import {
+  Container,
+  Content,
+  GenderInput,
+  AnimatedContainer,
+  Background,
+} from './styles';
 import { getValidationErrors } from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { useToast } from '../../context/toast';
@@ -98,11 +105,11 @@ const SignUp: React.FC = () => {
               placeholder="Senha"
               type="password"
             />
-            <Input
-              name="birth"
+            <InputMask
               icon={FiCalendar}
-              placeholder="Data de nascimento"
-              type="date"
+              name="birth"
+              mask="99/99/9999"
+              placeholder="DD/MM/AAAA"
             />
             <GenderInput>
               <label className="radio-label">Gênero </label>

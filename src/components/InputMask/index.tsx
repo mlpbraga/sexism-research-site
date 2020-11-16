@@ -1,23 +1,17 @@
-import React, {
-  InputHTMLAttributes,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
-
+import ReactInputMask, { Props as InputProps } from 'react-input-mask';
 import { useField } from '@unform/core';
-import { Container, Error } from './styles';
+import { Container, Error } from '../Input/styles';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface Props extends InputProps {
   name: string;
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
-  const ref = useRef<HTMLInputElement>(null);
+const InputMask: React.FC<Props> = ({ name, icon: Icon, ...rest }) => {
+  const inputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -26,7 +20,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!ref.current?.value);
+    setIsFilled(!!inputRef.current);
   }, []);
 
   const handleInpuFocus = useCallback(() => setIsFocused(true), []);
@@ -34,19 +28,26 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: ref.current,
+      ref: inputRef.current,
       path: 'value',
+      setValue(ref: any, value: string) {
+        ref.setInputValue(value);
+      },
+      clearValue(ref: any) {
+        ref.setInputValue('');
+      },
     });
   }, [fieldName, registerField]);
 
   return (
     <Container isInvalid={!!error} isFilled={isFilled} isFocused={isFocused}>
       {Icon && <Icon size={20} />}
-      <input
+      <ReactInputMask
         onFocus={handleInpuFocus}
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
-        ref={ref}
+        maskChar=" "
+        ref={inputRef}
         {...rest}
       />
       {error && (
@@ -57,5 +58,4 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
     </Container>
   );
 };
-
-export default Input;
+export default InputMask;

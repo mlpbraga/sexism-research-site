@@ -39,6 +39,10 @@ interface NewsData {
   deleted: boolean;
 }
 
+interface Params {
+  newsId: string;
+}
+
 const decodeHTML = (text: string): string => {
   const txt = document.createElement('textarea');
   txt.innerHTML = text;
@@ -46,7 +50,7 @@ const decodeHTML = (text: string): string => {
 };
 
 const Comments: React.FC = () => {
-  const { newsId } = useParams();
+  const { newsId } = useParams<Params>();
   const formRef = useRef<FormHandles>(null);
   const [comments, setComments] = useState<Array<CommentData>>([]);
   const [isLoading, setIsLoading] = useState(true);
