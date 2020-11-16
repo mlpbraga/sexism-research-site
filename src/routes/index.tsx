@@ -4,15 +4,21 @@ import Route from './Route';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Home from '../pages/Home';
-import Results from '../pages/Results';
+import Comments from '../pages/Comments';
+import News from '../pages/News';
+import About from '../pages/About';
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
     <Route path="/signup" component={SignUp} />
 
-    <Route path="/results" component={Results} open />
+    <Route path="/about" component={About} open />
 
+    <Route path="/news/:newsId/comments" component={Comments} open />
+    <Route path="/news" component={News} open />
+
+    <Route path="/comments/:newsId" component={Comments} open />
     <Route path="/home" component={Home} isPrivate />
   </Switch>
 );
