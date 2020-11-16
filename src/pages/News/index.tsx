@@ -67,7 +67,7 @@ const News: React.FC = () => {
               <New key={title.newsId}>
                 <li>
                   <div>
-                    <Link to={`/comments/${title.newsId}`}>
+                    <Link to={`/news/${title.newsId}/comments`}>
                       <p>
                         <b>{`N${title.newsId}: `} </b>
                         {`"${title.title}"`}
