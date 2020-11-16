@@ -9,10 +9,20 @@ const Header: React.FC = () => {
   return (
     <Container>
       <HeaderContent>
-        <img width="200px" src={logoImg} alt="SexismResearch" />
-        <a href="/" onClick={signOut}>
-          Logout
+        <a href='/home'>
+          <img width="200px" src={logoImg} alt="SexismResearch" />
         </a>
+        <div>
+          <a href="/news">
+            Notícias
+          </a>
+          <a href="/about">
+            Sobre
+          </a>
+          <a href="/" onClick={signOut}>
+            Logout
+          </a>
+        </div>
       </HeaderContent>
     </Container>
   );

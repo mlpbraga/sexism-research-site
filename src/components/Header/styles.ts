@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.header`
   width: 100%;
@@ -25,4 +26,14 @@ export const HeaderContent = styled.div`
   margin: 0 auto;
   padding: 5px 20px;
   font-weight: bold;
+
+  div a {
+    margin-right: 20px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  div a:hover {
+    color: ${shade(0.2, '#DC73A5')};
+  }
+
 `;
