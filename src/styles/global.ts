@@ -1,4 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
+import loadingSpinner from '../assets/loading.svg';
+
 
 export default createGlobalStyle`
   * {
@@ -26,4 +29,24 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+`;
+
+export const Loading = styled.div`
+  background: url(${loadingSpinner}) no-repeat center;
+  color: transparent;
+  height: 80px;
+  background-size: 10%;
+`;
+
+export const LoadingContainer = styled.div`
+  border: 1px solid black;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 2px solid #eeeef6;
+  margin-top: 20px;
+  height: 200px;
 `;
