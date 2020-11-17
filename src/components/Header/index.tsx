@@ -9,16 +9,14 @@ const Header: React.FC = () => {
   return (
     <Container>
       <HeaderContent>
-        <a href='/home'>
+        <a href="/home">
           <img width="200px" src={logoImg} alt="SexismResearch" />
         </a>
         <div>
-          <a href="/news">
+          {/* <a href="/news">
             Notícias
-          </a>
-          <a href="/about">
-            Sobre
-          </a>
+          </a> */}
+          {/* <a href="/about">Sobre</a> */}
           <a href="/" onClick={signOut}>
             Logout
           </a>
