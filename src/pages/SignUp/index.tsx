@@ -7,6 +7,7 @@ import {
   FiCalendar,
 } from 'react-icons/fi';
 
+import { parse, isDate } from "date-fns";
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -37,6 +38,15 @@ interface SignupFormData {
   gender: 'fem' | 'masc';
   birth: Date;
 }
+
+const parseDateString = (value: string, originalValue: string) => {
+  const parsedDate = isDate(originalValue)
+    ? originalValue
+    : parse(originalValue, "dd-MM-yyyy", new Date());
+
+  return parsedDate;
+}
+
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [gender, setGender] = useState('masc');
@@ -47,9 +57,10 @@ const SignUp: React.FC = () => {
     async (data: SignupFormData) => {
       try {
         formRef.current?.setErrors({});
+        const today = new Date();
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-          birth: Yup.date().required('Data de nascimento obrigatória'),
+          birth: Yup.date().transform(parseDateString).max(today).required('Data de nascimento obrigatória'),
           gender: Yup.string().required('Gênero obrigatório'),
           email: Yup.string()
             .required('E-mail obrigatório')
