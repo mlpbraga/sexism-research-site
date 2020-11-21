@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 import loadingSpinner from '../../assets/loading.svg';
 
 export const Container = styled.div`
@@ -40,6 +41,15 @@ export const Comment = styled.div`
     flex: 1;
     small {
       color: #a6a6a6;
+      a {
+        color: #b05c84;
+        &:visited {
+          color: ${shade(0.04, '#b05c84')};
+        }
+        &:-webkit-any-link {
+          color: ${shade(0.04, '#b05c84')};
+        }
+      }
     }
     #comment-engagement {
       margin: 10px 0;

@@ -42,9 +42,6 @@ export const New = styled.div`
     small {
       color: #a6a6a6;
     }
-    a {
-      color: #b05c84;
-    }
     p {
       color: #3d3d4d;
     }

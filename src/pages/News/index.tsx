@@ -73,16 +73,6 @@ const News: React.FC = () => {
                         {`"${title.title}"`}
                       </p>
                     </Link>
-                    <small>
-                      {`Acesse a notícia em `}
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={title.link}
-                      >
-                        {title.link.substring(0, 20)}...
-                      </a>
-                    </small>
                   </div>
                 </li>
               </New>

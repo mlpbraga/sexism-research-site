@@ -56,14 +56,14 @@ const Comments: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
-  const [newsTitle, setNewsTitle] = useState('');
+  const [news, setNews] = useState<NewsData>({} as NewsData);
   const limit = 25;
 
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
       try {
         const newsResponse = await api.get<NewsData>(`/news/${newsId}`);
-        setNewsTitle(newsResponse.data.title);
+        setNews(newsResponse.data);
         let url = newsId
           ? `/comments?newsId=${newsId}&limit=${limit}&offset=0`
           : '/comments?limit=10&offset=0';
@@ -118,12 +118,26 @@ const Comments: React.FC = () => {
     <>
       <Header />
       <Container>
-        <Comment>
-          <div>
-            <h3> Exibindo comentários para a notícia:</h3>
-            <h1>{newsTitle}</h1>
-          </div>
-        </Comment>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Comment>
+            <div>
+              <h3> Exibindo comentários para a notícia:</h3>
+              <h1>{news.title}</h1>
+              <small>
+                {`Acesse a notícia em `}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={news.link}
+                >
+                  {news.link.substring(0, 20)}...
+                </a>
+              </small>
+            </div>
+          </Comment>
+        )}
         {/* TODO: IMPLEMENT COMMENTS SEARCH */}
         <Form ref={formRef} onSubmit={handleSearch}>
           <Input name="q" icon={FiSearch} placeholder="Buscar palavra" />
