@@ -51,6 +51,18 @@ export const Comment = styled.div`
         }
       }
     }
+    div {
+      border-radius: 4px;
+      #not-sexist {
+        background-color: #d1edd8;
+        color: #51735a;
+      }
+      #sexist {
+        background-color: #edd1d1;
+        color: #735151;
+      }
+    }
+
     #comment-engagement {
       margin: 10px 0;
       align-self: center;
