@@ -49,14 +49,12 @@ const Dashboard: React.FC = () => {
   const handleVote = useCallback(
     async (vote: string) => {
       try {
-        setIsLoading(true);
         await api.post('/votes', {
           commentId: commentData.commentId,
           vote,
         });
 
         setReloadComment(!reloadComment);
-        setIsLoading(false);
       } catch (error) {
         addToast({
           title: 'Falha ao enviar o voto',
@@ -64,7 +62,7 @@ const Dashboard: React.FC = () => {
         });
       }
     },
-    [reloadComment, commentData, addToast],
+    [reloadComment, commentData, addToast, isLoading],
   );
 
   useEffect(() => {
@@ -164,8 +162,22 @@ const Dashboard: React.FC = () => {
                 <strong>comentário em avaliação</strong>?
               </p>
               <VoteOptions>
-                <Button onClick={() => handleVote('s')}>Sexista</Button>
-                <Button onClick={() => handleVote('n')}>Não sexista</Button>
+                <Button
+                  onClick={() => {
+                    setIsLoading(true);
+                    handleVote('s');
+                  }}
+                >
+                  Sexista
+                </Button>
+                <Button
+                  onClick={() => {
+                    setIsLoading(true);
+                    handleVote('n');
+                  }}
+                >
+                  Não sexista
+                </Button>
               </VoteOptions>
 
               <SkipOption>
