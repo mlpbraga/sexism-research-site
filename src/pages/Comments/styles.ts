@@ -63,6 +63,24 @@ export const Comment = styled.div`
       }
     }
 
+    #vote-distirbution-box {
+      margin: 20px auto 0;
+      background-color: #f5f5fa;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+
+      #vote-distirbution {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        p {
+          margin: 0;
+        }
+      }
+    }
+
     #comment-engagement {
       margin: 10px 0;
       align-self: center;

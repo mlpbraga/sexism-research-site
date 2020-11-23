@@ -142,7 +142,8 @@ const Comments: React.FC = () => {
         {/* TODO: IMPLEMENT COMMENTS SEARCH */}
         <Form ref={formRef} onSubmit={handleSearch}>
           <Input name="q" icon={FiSearch} placeholder="Buscar palavra" />
-          <RadioInput>
+          {/* TODO: implement filter by label */}
+          {/* <RadioInput>
             <label className="radio-label">Rótulo </label>
             <div className="signup-input-radio">
               <input
@@ -168,7 +169,7 @@ const Comments: React.FC = () => {
               />
               <label className="radio-label"> não sexistas </label>
             </div>
-          </RadioInput>
+          </RadioInput> */}
           <Button type="submit">Filtrar</Button>
         </Form>
         {isLoading ? (
@@ -203,6 +204,14 @@ const Comments: React.FC = () => {
                       <div id="thumbs">
                         <FiThumbsDown color="#ff6e83" />
                         <p>{comment.dislikes || 0}</p>
+                      </div>
+                    </div>
+                    <div id="vote-distirbution-box">
+                      <b>Votos atribuídos por classe </b>
+                      <div id="vote-distirbution">
+                        <p>{`sexista: ${comment.votes.sexist}`}</p>
+                        <p>{`não sexista: ${comment.votes.notSexist}`}</p>
+                        <p>{`total: ${comment.votes.total}`}</p>
                       </div>
                     </div>
                   </li>
