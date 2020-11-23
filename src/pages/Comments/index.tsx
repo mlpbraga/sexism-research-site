@@ -54,14 +54,50 @@ const Comments: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [comments, setComments] = useState<Array<CommentData>>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
   const [news, setNews] = useState<NewsData>({} as NewsData);
   const limit = 25;
 
+  const handlePagination = useCallback(async () => {
+    try {
+      let url = newsId
+        ? `/comments?newsId=${newsId}&limit=${limit}&offset=${offset + limit}`
+        : `/comments?limit=${limit}&offset=${offset + limit}`;
+      if (query) {
+        url += `&query=${query}`;
+      }
+      const response = await api.get(url);
+      setComments(oldValue => [...oldValue, ...response.data]);
+      setLoadingMore(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [offset, newsId, query]);
+
+  const handleSearch = useCallback(
+    async (data: SearchFormData) => {
+      try {
+        const { q } = data;
+        setOffset(0);
+        setQuery(q);
+        const url = newsId
+          ? `/comments?newsId=${newsId}&limit=${limit}&offset=0&query=${q}`
+          : `/comments?limit=${limit}&offset=0&query=${q}`;
+        const response = await api.get(url);
+        setComments(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [newsId],
+  );
+
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
       try {
+        setOffset(0);
         const newsResponse = await api.get<NewsData>(`/news/${newsId}`);
         setNews(newsResponse.data);
         let url = newsId
@@ -81,39 +117,6 @@ const Comments: React.FC = () => {
     loadInfo();
   }, [query, newsId]);
 
-  const handleSearch = useCallback(
-    async (data: SearchFormData) => {
-      try {
-        const { q } = data;
-        setQuery(q);
-        const url = newsId
-          ? `/comments?newsId=${newsId}&limit=${limit}&offset=0&query=${q}`
-          : `/comments?limit=${limit}&offset=0&query=${q}`;
-        const response = await api.get(url);
-        setComments(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [newsId],
-  );
-
-  const handlePagination = useCallback(async () => {
-    try {
-      setOffset(oldValue => oldValue + limit);
-      let url = newsId
-        ? `/comments?newsId=${newsId}&limit=${limit}&offset=${offset}`
-        : `/comments?limit=${limit}&offset=${offset}`;
-      if (query) {
-        url += `&query=${query}`;
-      }
-      const response = await api.get(url);
-      setComments(oldValue => [...oldValue, ...response.data]);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [offset, newsId, query]);
-
   return (
     <>
       <Header />
@@ -127,11 +130,7 @@ const Comments: React.FC = () => {
               <h1>{news.title}</h1>
               <small>
                 {`Acesse a notícia em `}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={news.link}
-                >
+                <a target="_blank" rel="noopener noreferrer" href={news.link}>
                   {news.link.substring(0, 20)}...
                 </a>
               </small>
@@ -156,7 +155,7 @@ const Comments: React.FC = () => {
                         <b>{`C${comment.commentId}: `}</b>
                         {`"${comment.content}"`}
                       </p>
-                      {comment.replyTo !== ' ' && (
+                      {comment.replyTo && comment.replyTo !== ' ' && (
                         <small>
                           {`Esse comentário foi uma resposta ao comentário "${decodeHTML(
                             comment.replyTo,
@@ -167,18 +166,30 @@ const Comments: React.FC = () => {
                     <div id="comment-engagement">
                       <div id="thumbs">
                         <FiThumbsUp color="#1381a2" />
-                        <p>{comment.likes}</p>
+                        <p>{comment.likes || 0}</p>
                       </div>
                       <div id="thumbs">
                         <FiThumbsDown color="#ff6e83" />
-                        <p>{comment.dislikes}</p>
+                        <p>{comment.dislikes || 0}</p>
                       </div>
                     </div>
                   </li>
                 </Comment>
               ))}
             </ul>
-            <Button onClick={() => handlePagination()}>Carregar mais</Button>
+            {loadingMore ? (
+              <Loading />
+            ) : (
+              <Button
+                onClick={() => {
+                  setLoadingMore(true);
+                  setOffset(oldValue => oldValue + limit);
+                  handlePagination();
+                }}
+              >
+                Carregar mais
+              </Button>
+            )}
           </>
         )}
       </Container>
