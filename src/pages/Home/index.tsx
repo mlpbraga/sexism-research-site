@@ -126,7 +126,11 @@ const Dashboard: React.FC = () => {
             <>
               <h2>{commentData.newsTitle}</h2>
               Leia o conteúdo da notícia em{' '}
-              <a target='_blank' rel='noopener noreferrer' href={commentData.newsUrl}>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={commentData.newsUrl}
+              >
                 {commentData.newsUrl.substring(0, 20)}...
               </a>
             </>
@@ -136,7 +140,14 @@ const Dashboard: React.FC = () => {
           <header>
             <strong>Comentário em avaliação</strong>
           </header>
-          {isLoading ? <Loading /> : <p>"{commentData.commentContent}"</p>}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <p>
+              <b>{`C${commentData.commentId}: `}</b>
+              {`"${commentData.commentContent}"`}
+            </p>
+          )}
           {showReply && (
             <div>
               <small>
@@ -158,7 +169,7 @@ const Dashboard: React.FC = () => {
               </VoteOptions>
 
               <SkipOption>
-                <a href='/'>Pular por enquanto...</a>
+                <a href="/">Pular por enquanto...</a>
               </SkipOption>
             </>
           )}
