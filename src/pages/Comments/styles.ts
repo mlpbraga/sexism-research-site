@@ -88,3 +88,14 @@ export const Loading = styled.div`
   height: 80px;
   background-size: 10%;
 `;
+
+export const RadioInput = styled.div`
+  background: #f5f5fa;
+  border-radius: 10px;
+  border: 2px solid #f5f5fa;
+  padding: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;

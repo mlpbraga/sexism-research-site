@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { Container, Comment, Loading } from './styles';
+import { Container, Comment, Loading, RadioInput } from './styles';
 
 import api from '../../services/api';
 import CommentsProxy from '../../services/api/comments';
@@ -53,6 +53,7 @@ const decodeHTML = (text: string): string => {
 const Comments: React.FC = () => {
   const { newsId } = useParams<Params>();
   const formRef = useRef<FormHandles>(null);
+  const [label, setLabel] = useState();
   const [comments, setComments] = useState<Array<CommentData>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -87,6 +88,7 @@ const Comments: React.FC = () => {
         query,
         limit,
         offset,
+        label,
       });
       setComments(response);
       setIsLoading(false);
@@ -140,6 +142,33 @@ const Comments: React.FC = () => {
         {/* TODO: IMPLEMENT COMMENTS SEARCH */}
         <Form ref={formRef} onSubmit={handleSearch}>
           <Input name="q" icon={FiSearch} placeholder="Buscar palavra" />
+          <RadioInput>
+            <label className="radio-label">Rótulo </label>
+            <div className="signup-input-radio">
+              <input
+                type="radio"
+                name="label"
+                value={1}
+                checked={label === '1'}
+                onChange={event => {
+                  setLabel(event.target.value);
+                }}
+              />
+              <label className="radio-label"> sexistas </label>
+            </div>
+            <div className="signup-input-radio">
+              <input
+                type="radio"
+                name="label"
+                value={0}
+                checked={label === '0'}
+                onChange={event => {
+                  setLabel(event.target.value);
+                }}
+              />
+              <label className="radio-label"> não sexistas </label>
+            </div>
+          </RadioInput>
           <Button type="submit">Filtrar</Button>
         </Form>
         {isLoading ? (
