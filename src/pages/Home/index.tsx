@@ -14,6 +14,7 @@ interface CommentData {
   newsUrl: string;
   commentContent: string;
   replyTo: string;
+  description: string;
 }
 
 interface CommentsResponse {
@@ -21,6 +22,7 @@ interface CommentsResponse {
   News: {
     title: string;
     link: string;
+    description: string;
   };
   content: string;
   replyTo: string;
@@ -43,6 +45,7 @@ const Dashboard: React.FC = () => {
     newsUrl: '',
     commentContent: '',
     replyTo: '',
+    description: '',
   });
   const showReply = commentData.replyTo !== ' ' && commentData.replyTo !== '';
 
@@ -76,6 +79,7 @@ const Dashboard: React.FC = () => {
           newsUrl: comment.News.link,
           commentContent: decodeHTML(comment.content),
           replyTo: decodeHTML(comment.replyTo),
+          description: decodeHTML(comment.News.description),
         });
         setIsLoading(false);
       } catch (error) {
@@ -123,6 +127,7 @@ const Dashboard: React.FC = () => {
           ) : (
             <>
               <h2>{commentData.newsTitle}</h2>
+              {commentData.description && commentData.description}
               Leia o conteúdo da notícia em{' '}
               <a
                 target="_blank"
