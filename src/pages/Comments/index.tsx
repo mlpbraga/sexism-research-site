@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import { Container, Comment, Loading } from './styles';
 
 import api from '../../services/api';
+import CommentsProxy from '../../services/api/comments';
 
 interface SearchFormData {
   q: string;
@@ -62,37 +63,37 @@ const Comments: React.FC = () => {
 
   const handlePagination = useCallback(async () => {
     try {
-      let url = newsId
-        ? `/comments?newsId=${newsId}&limit=${limit}&offset=${offset + limit}`
-        : `/comments?limit=${limit}&offset=${offset + limit}`;
-      if (query) {
-        url += `&query=${query}`;
-      }
-      const response = await api.get(url);
-      setComments(oldValue => [...oldValue, ...response.data]);
+      const response = await CommentsProxy.get({
+        newsId,
+        query,
+        limit,
+        offset,
+      });
+      setComments(oldValue => [...oldValue, ...response]);
       setLoadingMore(false);
     } catch (error) {
       console.log(error);
     }
   }, [offset, newsId, query]);
 
-  const handleSearch = useCallback(
-    async (data: SearchFormData) => {
-      try {
-        const { q } = data;
-        setOffset(0);
-        setQuery(q);
-        const url = newsId
-          ? `/comments?newsId=${newsId}&limit=${limit}&offset=0&query=${q}`
-          : `/comments?limit=${limit}&offset=0&query=${q}`;
-        const response = await api.get(url);
-        setComments(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [newsId],
-  );
+  const handleSearch = async (data: SearchFormData): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const { q } = data;
+      setOffset(0);
+      setQuery(q);
+      const response = await CommentsProxy.get({
+        newsId,
+        query,
+        limit,
+        offset,
+      });
+      setComments(response);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
@@ -100,14 +101,13 @@ const Comments: React.FC = () => {
         setOffset(0);
         const newsResponse = await api.get<NewsData>(`/news/${newsId}`);
         setNews(newsResponse.data);
-        let url = newsId
-          ? `/comments?newsId=${newsId}&limit=${limit}&offset=0`
-          : '/comments?limit=10&offset=0';
-        if (query) {
-          url += `&query=${query}`;
-        }
-        const response = await api.get<Array<CommentData>>(url);
-        setComments(response.data);
+        const response = await CommentsProxy.get({
+          newsId,
+          query,
+          limit,
+          offset,
+        });
+        setComments(response);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -115,7 +115,7 @@ const Comments: React.FC = () => {
     };
 
     loadInfo();
-  }, [query, newsId]);
+  }, []);
 
   return (
     <>
