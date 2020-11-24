@@ -11,7 +11,7 @@ import { parse, isDate } from "date-fns";
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-
+import  Moment from 'moment';
 import { Link, useHistory } from 'react-router-dom';
 import logoImg from '../../assets/logo.png';
 
@@ -36,15 +36,7 @@ interface SignupFormData {
   email: string;
   password: string;
   gender: 'fem' | 'masc';
-  birth: Date;
-}
-
-const parseDateString = (value: string, originalValue: string) => {
-  const parsedDate = isDate(originalValue)
-    ? originalValue
-    : parse(originalValue, "dd-MM-yyyy", new Date());
-
-  return parsedDate;
+  birth: string;
 }
 
 const SignUp: React.FC = () => {
@@ -60,7 +52,7 @@ const SignUp: React.FC = () => {
         const today = new Date();
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-          birth: Yup.date().transform(parseDateString).max(today).required('Data de nascimento obrigatória'),
+          birth: Yup.string().required('Data de nascimento obrigatória'),
           gender: Yup.string().required('Gênero obrigatório'),
           email: Yup.string()
             .required('E-mail obrigatório')
@@ -74,7 +66,7 @@ const SignUp: React.FC = () => {
           ...data,
           gender,
           username: data.email,
-          birth: new Date(data.birth),
+          birth: parse(data.birth, 'dd/MM/yyyy', new Date()),
         };
         await schema.validate(body, { abortEarly: false });
         await api.post('/users', body);
