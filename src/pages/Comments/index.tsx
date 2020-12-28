@@ -181,9 +181,6 @@ const Comments: React.FC = () => {
                 <Comment key={comment.commentId}>
                   <li>
                     <div>
-                      <div id={comment.label ? 'sexist' : 'not-sexist'}>
-                        {comment.label ? `sexista` : `não sexista`}
-                      </div>
                       <p>
                         <b>{`C${comment.commentId}: `}</b>
                         {`"${comment.content}"`}
@@ -213,6 +210,19 @@ const Comments: React.FC = () => {
                         <p>{`não sexista: ${comment.votes.notSexist}`}</p>
                         <p>{`total: ${comment.votes.total}`}</p>
                       </div>
+                      {comment.votes.notSexist !== comment.votes.sexist && (
+                        <div
+                          id={
+                            comment.votes.notSexist < comment.votes.sexist
+                              ? 'sexist'
+                              : 'not-sexist'
+                          }
+                        >
+                          {comment.votes.notSexist < comment.votes.sexist
+                            ? `sexista`
+                            : `não sexista`}
+                        </div>
+                      )}
                     </div>
                   </li>
                 </Comment>

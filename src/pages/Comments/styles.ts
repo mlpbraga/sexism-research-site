@@ -53,6 +53,8 @@ export const Comment = styled.div`
     }
     div {
       border-radius: 4px;
+      padding: 2px;
+      margin-top: 5px;
       #not-sexist {
         background-color: #d1edd8;
         color: #51735a;
