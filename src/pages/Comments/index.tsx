@@ -53,7 +53,7 @@ const decodeHTML = (text: string): string => {
 const Comments: React.FC = () => {
   const { newsId } = useParams<Params>();
   const formRef = useRef<FormHandles>(null);
-  const [label, setLabel] = useState();
+  const [label, setLabel] = useState('');
   const [comments, setComments] = useState<Array<CommentData>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -143,14 +143,16 @@ const Comments: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSearch}>
           <Input name="q" icon={FiSearch} placeholder="Buscar palavra" />
           {/* TODO: implement filter by label */}
-          {/* <RadioInput>
-            <label className="radio-label">Rótulo </label>
+          <RadioInput>
+            <label className="radio-label">
+              <b>Rótulo </b>
+            </label>
             <div className="signup-input-radio">
               <input
                 type="radio"
                 name="label"
-                value={1}
-                checked={label === '1'}
+                value="sexist"
+                checked={label === 'sexist'}
                 onChange={event => {
                   setLabel(event.target.value);
                 }}
@@ -161,15 +163,27 @@ const Comments: React.FC = () => {
               <input
                 type="radio"
                 name="label"
-                value={0}
-                checked={label === '0'}
+                value="not-sexist"
+                checked={label === 'not-sexist'}
                 onChange={event => {
                   setLabel(event.target.value);
                 }}
               />
               <label className="radio-label"> não sexistas </label>
             </div>
-          </RadioInput> */}
+            <div className="signup-input-radio">
+              <input
+                type="radio"
+                name="label"
+                value=""
+                checked={label === ''}
+                onChange={event => {
+                  setLabel(event.target.value);
+                }}
+              />
+              <label className="radio-label"> todos </label>
+            </div>
+          </RadioInput>
           <Button type="submit">Filtrar</Button>
         </Form>
         {isLoading ? (

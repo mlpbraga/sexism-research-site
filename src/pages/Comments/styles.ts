@@ -113,7 +113,7 @@ export const RadioInput = styled.div`
   background: #f5f5fa;
   border-radius: 10px;
   border: 2px solid #f5f5fa;
-  padding: 16px;
+  padding: 6px;
   width: 100%;
   display: flex;
   align-items: center;

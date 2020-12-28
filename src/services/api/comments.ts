@@ -5,7 +5,7 @@ interface Params {
   limit: number;
   offset: number;
   query: string;
-  label?: boolean;
+  label?: string;
 }
 
 const CommentsProxy = {
@@ -13,9 +13,8 @@ const CommentsProxy = {
     let url = `/comments?limit=${limit}&offset=${offset}`;
     if (newsId) url += `&newsid=${newsId}`;
     if (query) url += `&query=${query}`;
-    if (label !== undefined) {
-      if (label === false) url += `&label=0`;
-      else url += `&label=1`;
+    if (label !== undefined && label !== '') {
+      url += `&label=${label}`;
     }
 
     const response = await api.get(url);
