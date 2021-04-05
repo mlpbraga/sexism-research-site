@@ -7,11 +7,10 @@ import {
   FiCalendar,
 } from 'react-icons/fi';
 
-import { parse, isDate } from "date-fns";
+import { parse } from 'date-fns';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import  Moment from 'moment';
 import { Link, useHistory } from 'react-router-dom';
 import logoImg from '../../assets/logo.png';
 
@@ -49,7 +48,6 @@ const SignUp: React.FC = () => {
     async (data: SignupFormData) => {
       try {
         formRef.current?.setErrors({});
-        const today = new Date();
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
           birth: Yup.string().required('Data de nascimento obrigatória'),

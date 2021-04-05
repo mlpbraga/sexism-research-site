@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
         });
       }
     },
-    [reloadComment, commentData, addToast, isLoading],
+    [reloadComment, commentData, addToast],
   );
 
   useEffect(() => {

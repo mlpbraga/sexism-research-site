@@ -117,7 +117,7 @@ const Comments: React.FC = () => {
     };
 
     loadInfo();
-  }, []);
+  }, [newsId, offset, query]);
 
   return (
     <>
