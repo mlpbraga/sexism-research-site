@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
+import _ from 'lodash';
 import {
   FiArrowLeft,
   FiUser,
@@ -27,6 +28,7 @@ import {
 } from './styles';
 import { getValidationErrors } from '../../utils/getValidationErrors';
 import api from '../../services/api';
+import { useAuth } from '../../context/auth';
 import { useToast } from '../../context/toast';
 import About from '../../components/About';
 
@@ -34,6 +36,7 @@ interface SignupFormData {
   name: string;
   email: string;
   password: string;
+  passwordConfirmation: string;
   gender: 'fem' | 'masc';
   birth: string;
 }
@@ -42,6 +45,7 @@ const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [gender, setGender] = useState('masc');
   const history = useHistory();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
@@ -59,6 +63,10 @@ const SignUp: React.FC = () => {
             6,
             'A senha precisa ter no mínimo 6 dígitos',
           ),
+          passwordConfirmation: Yup.string().oneOf(
+            [Yup.ref('password'), undefined],
+            'Senhas não correspondentes',
+          ),
         });
         const body = {
           ...data,
@@ -66,15 +74,22 @@ const SignUp: React.FC = () => {
           username: data.email,
           birth: parse(data.birth, 'dd/MM/yyyy', new Date()),
         };
-        await schema.validate(body, { abortEarly: false });
-        await api.post('/users', body);
+        await schema.validate(body, {
+          abortEarly: false,
+        });
+        await api.post('/users', _.omit(body, ['passwordConfirmation']));
         addToast({
           title: 'Cadastro realizado com sucesso',
           description: 'Você já pode fazer seu login',
           type: 'success',
         });
-        history.push('/');
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        history.push('/home');
       } catch (error) {
+        console.log(error);
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
           formRef.current?.setErrors(errors);
@@ -87,7 +102,7 @@ const SignUp: React.FC = () => {
         }
       }
     },
-    [gender, addToast, history],
+    [gender, addToast, signIn, history],
   );
 
   return (
@@ -104,6 +119,12 @@ const SignUp: React.FC = () => {
               name="password"
               icon={FiLock}
               placeholder="Senha"
+              type="password"
+            />
+            <Input
+              name="passwordConfirmation"
+              icon={FiLock}
+              placeholder="Confirmar senha"
               type="password"
             />
             <InputMask

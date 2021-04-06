@@ -12,6 +12,8 @@ export const Container = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;
+    margin: 5px auto 0;
+    padding: 5px;
   }
 `;
 
