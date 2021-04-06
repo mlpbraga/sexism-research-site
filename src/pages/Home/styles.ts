@@ -85,7 +85,7 @@ export const VoteOptions = styled.div`
   align-items: center;
   justify-content: space-evenly;
   button {
-    max-width: 200px;
+    max-width: 150px;
   }
 `;
 
