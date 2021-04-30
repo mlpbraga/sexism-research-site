@@ -6,6 +6,7 @@ import {
   FiMail,
   FiLock,
   FiCalendar,
+  FiInfo,
 } from 'react-icons/fi';
 
 import { parse } from 'date-fns';
@@ -37,7 +38,7 @@ interface SignupFormData {
   email: string;
   password: string;
   passwordConfirmation: string;
-  gender: 'fem' | 'masc';
+  gender: 'fem' | 'masc' | 'other';
   birth: string;
 }
 
@@ -63,6 +64,7 @@ const SignUp: React.FC = () => {
             6,
             'A senha precisa ter no mínimo 6 dígitos',
           ),
+          genderDescription: Yup.string(),
           passwordConfirmation: Yup.string().oneOf(
             [Yup.ref('password'), undefined],
             'Senhas não correspondentes',
@@ -77,6 +79,7 @@ const SignUp: React.FC = () => {
         await schema.validate(body, {
           abortEarly: false,
         });
+        console.log(body);
         await api.post('/users', _.omit(body, ['passwordConfirmation']));
         addToast({
           title: 'Cadastro realizado com sucesso',
@@ -89,7 +92,7 @@ const SignUp: React.FC = () => {
         });
         history.push('/home');
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
           formRef.current?.setErrors(errors);
@@ -133,8 +136,8 @@ const SignUp: React.FC = () => {
               mask="99/99/9999"
               placeholder="DD/MM/AAAA"
             />
+            <label className="radio-label">Gênero </label>
             <GenderInput>
-              <label className="radio-label">Gênero </label>
               <div className="signup-input-radio">
                 <input
                   type="radio"
@@ -159,7 +162,22 @@ const SignUp: React.FC = () => {
                 />
                 <label className="radio-label"> Masculino </label>
               </div>
+              <div className="signup-input-radio">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="other"
+                  checked={gender === 'other'}
+                  onChange={event => {
+                    setGender(event.target.value);
+                  }}
+                />
+                <label className="radio-label"> Outro </label>
+              </div>
             </GenderInput>
+            {gender === 'other' && 
+              <Input name="genderDescription" icon={FiInfo} placeholder="Other" />
+            }
             <Button type="submit">Cadastrar</Button>
           </Form>
           <Link to="/">
