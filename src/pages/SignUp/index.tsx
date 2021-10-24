@@ -45,6 +45,7 @@ interface SignupFormData {
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [gender, setGender] = useState('masc');
+  const [terms, setTerms] = useState(false);
   const history = useHistory();
   const { signIn } = useAuth();
   const { addToast } = useToast();
@@ -79,7 +80,6 @@ const SignUp: React.FC = () => {
         await schema.validate(body, {
           abortEarly: false,
         });
-        console.log(body);
         await api.post('/users', _.omit(body, ['passwordConfirmation']));
         addToast({
           title: 'Cadastro realizado com sucesso',
@@ -92,7 +92,6 @@ const SignUp: React.FC = () => {
         });
         history.push('/home');
       } catch (error) {
-        console.log(error.message);
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
           formRef.current?.setErrors(errors);
@@ -136,49 +135,84 @@ const SignUp: React.FC = () => {
               mask="99/99/9999"
               placeholder="DD/MM/AAAA"
             />
-            <label className="radio-label">Gênero </label>
+            <label htmlFor="gender" className="radio-label">
+              Gênero{' '}
+            </label>
             <GenderInput>
               <div className="signup-input-radio">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="fem"
-                  checked={gender === 'fem'}
-                  onChange={event => {
-                    setGender(event.target.value);
-                  }}
-                />
-                <label className="radio-label"> Feminino </label>
+                <label htmlFor="gender" className="radio-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="fem"
+                    checked={gender === 'fem'}
+                    onChange={event => {
+                      setGender(event.target.value);
+                    }}
+                  />
+                  Feminino{' '}
+                </label>
               </div>
               <div className="signup-input-radio">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="masc"
-                  checked={gender === 'masc'}
-                  onChange={event => {
-                    setGender(event.target.value);
-                  }}
-                />
-                <label className="radio-label"> Masculino </label>
+                <label htmlFor="gender" className="radio-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="masc"
+                    checked={gender === 'masc'}
+                    onChange={event => {
+                      setGender(event.target.value);
+                    }}
+                  />
+                  Masculino
+                </label>
               </div>
               <div className="signup-input-radio">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="other"
-                  checked={gender === 'other'}
-                  onChange={event => {
-                    setGender(event.target.value);
-                  }}
-                />
-                <label className="radio-label"> Outro </label>
+                <label htmlFor="gender" className="radio-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="other"
+                    checked={gender === 'other'}
+                    onChange={event => {
+                      setGender(event.target.value);
+                    }}
+                  />
+                  Outro{' '}
+                </label>
               </div>
             </GenderInput>
-            {gender === 'other' && 
-              <Input name="genderDescription" icon={FiInfo} placeholder="Other" />
-            }
-            <Button type="submit">Cadastrar</Button>
+            {gender === 'other' && (
+              <Input
+                name="genderDescription"
+                icon={FiInfo}
+                placeholder="Other"
+              />
+            )}
+            <div id="terms-container">
+              <label htmlFor="terms" id="terms-label">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  name="terms"
+                  checked={terms}
+                  onChange={() => setTerms(!terms)}
+                />
+                Declaro que li e aceito os{' '}
+                <a
+                  id="terms-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://luisamestrado.notion.site/TERMO-DE-CONSENTIMENTO-LIVRE-E-ESCLARECIDO-cff238dc955c450c9df52e7e334d1809"
+                >
+                  termos de consentimento
+                </a>
+                .
+              </label>
+            </div>
+            <Button type="submit" disabled={!terms}>
+              Cadastrar
+            </Button>
           </Form>
           <Link to="/">
             <FiArrowLeft />

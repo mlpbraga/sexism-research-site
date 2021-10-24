@@ -85,6 +85,20 @@ export const AnimatedContainer = styled.div`
         color: ${shade(0.2, '#DC73A5')};
       }
     }
+
+    #terms-container {
+      display: inline-flex;
+
+      input {
+        margin-right: 4px;
+      }
+
+      #terms-link {
+        margin: 0;
+        display: contents;
+      }
+
+    }
   }
 
   > a {

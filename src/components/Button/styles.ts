@@ -18,6 +18,10 @@ export const Container = styled.button`
     background: ${shade(0.2, '#DC73A5')};
   }
 
+  &:disabled {
+    background: ${shade(0.1, '#8d8d8d')};
+  }
+
   @media (max-width: 900px) {
     margin: 5px auto 0;
     padding: 5px;
