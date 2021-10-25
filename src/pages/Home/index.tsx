@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Button from '../../components/Button';
-import { Container, Content, Loading, VoteOptions, SkipOption } from './styles';
+import {
+  Container,
+  Content,
+  Loading,
+  VoteOptions,
+  SkipOption,
+  RadioButton,
+} from './styles';
 import api from '../../services/api';
 
 import { useToast } from '../../context/toast';
@@ -39,6 +46,7 @@ const Dashboard: React.FC = () => {
   const [showExemples, setShowExamples] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [reloadComment, setReloadComment] = useState(false);
+  const [vote, setVote] = useState('');
   const [commentData, setCommentData] = useState<CommentData>({
     commentId: 0,
     newsTitle: '',
@@ -50,11 +58,11 @@ const Dashboard: React.FC = () => {
   const showReply = commentData.replyTo !== ' ' && commentData.replyTo !== '';
 
   const handleVote = useCallback(
-    async (vote: string) => {
+    async (voteValue: string) => {
       try {
         await api.post('/votes', {
           commentId: commentData.commentId,
-          vote,
+          voteValue,
         });
 
         setReloadComment(!reloadComment);
@@ -167,21 +175,37 @@ const Dashboard: React.FC = () => {
                 <strong>comentário em avaliação</strong>?
               </p>
               <VoteOptions>
+                <RadioButton isChecked={vote === 's'} htmlFor="vote-yes">
+                  <input
+                    id="vote-yes"
+                    type="radio"
+                    name="vote-yes"
+                    value="s"
+                    checked={vote === 's'}
+                    onChange={() => setVote('s')}
+                  />
+                  SEXISTA
+                </RadioButton>
+                <RadioButton isChecked={vote === 'n'} htmlFor="vote-no">
+                  <input
+                    id="vote-no"
+                    type="radio"
+                    name="vote-no"
+                    value="n"
+                    checked={vote === 'n'}
+                    onChange={() => setVote('n')}
+                  />
+                  NÃO SEXISTA
+                </RadioButton>
+              </VoteOptions>
+              <VoteOptions>
                 <Button
                   onClick={() => {
                     setIsLoading(true);
-                    handleVote('s');
+                    handleVote(vote);
                   }}
                 >
-                  Sexista
-                </Button>
-                <Button
-                  onClick={() => {
-                    setIsLoading(true);
-                    handleVote('n');
-                  }}
-                >
-                  Não sexista
+                  ENVIAR VOTO
                 </Button>
               </VoteOptions>
 

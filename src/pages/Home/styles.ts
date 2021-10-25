@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import loadingSpinner from '../../assets/loading.svg';
 
@@ -86,6 +86,28 @@ export const VoteOptions = styled.div`
   justify-content: space-evenly;
   button {
     max-width: 150px;
+  }
+`;
+interface RadioProps {
+  isChecked: boolean;
+}
+
+export const RadioButton = styled.label<RadioProps>`
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 8px;
+  width: 150px;
+
+  ${props =>
+    props.isChecked &&
+    css`
+      background: #f5f5fa;
+    `}
+
+  input {
+    margin-top: -1px;
+    margin-right: 4px;
+    vertical-align: middle;
   }
 `;
 
