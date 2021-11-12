@@ -45,19 +45,18 @@ export const Content = styled.div`
   }
   p {
     padding: 0 20px;
+    margin: 8px;
   }
   a {
     color: #b05c84;
   }
-  small {
-    color: #a6a6a6;
-  }
+
   div {
     margin: 15px 15px 0;
   }
 
   #show-more {
-    margin-top: 20px;
+    margin-top: 8px;
     color: #b05c84;
     font-size: 15px;
     text-decoration: underline;
@@ -122,4 +121,24 @@ export const SkipOption = styled.div`
   a {
     text-align: 'center';
   }
+`;
+
+export const UserProgress = styled.div`
+  margin: 20px;
+
+  p {
+    margin-bottom: 6px;
+  }
+
+  small {
+    color: #68697f;
+  }
+  @media (max-width: 900px) {
+    font-size: small;
+  }
+`;
+
+export const Reply = styled.div`
+  font-size: small;
+  color: #a6a6a6;
 `;

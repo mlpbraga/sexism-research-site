@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
+import ProgressBar from '@ramonak/react-progress-bar';
 import Button from '../../components/Button';
 import {
   Container,
@@ -8,6 +8,8 @@ import {
   VoteOptions,
   SkipOption,
   RadioButton,
+  UserProgress,
+  Reply,
 } from './styles';
 import api from '../../services/api';
 
@@ -90,6 +92,10 @@ const Dashboard: React.FC = () => {
         });
 
         setReloadComment(!reloadComment);
+        setUserData(now => ({
+          ...userData,
+          countVotes: now.countVotes + 1,
+        }));
       } catch (error) {
         addToast({
           title: 'Falha ao enviar o voto',
@@ -97,9 +103,10 @@ const Dashboard: React.FC = () => {
         });
       }
     },
-    [reloadComment, commentData, addToast],
+    [commentData.commentId, reloadComment, userData, addToast],
   );
-  useEffect(() =>{
+
+  useEffect(() => {
     const loadInfo = async (): Promise<void> => {
       try {
         const myUserRequest = await api.get<UsersMeResponse>('/users/me');
@@ -119,6 +126,7 @@ const Dashboard: React.FC = () => {
 
     loadInfo();
   }, []);
+
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
       try {
@@ -134,6 +142,7 @@ const Dashboard: React.FC = () => {
           description: decodeHTML(comment.News.description),
         });
         setIsLoading(false);
+        setVote('');
       } catch (error) {
         console.log(error);
       }
@@ -142,30 +151,43 @@ const Dashboard: React.FC = () => {
     loadInfo();
   }, [reloadComment]);
 
+  const votesPercentage = (): string => {
+    return (100 * (userData.countVotes / 3588)).toFixed(2);
+  };
   return (
     <>
       <Header />
-      {
-        userLoaded && (<>
-          <Content>{userData.gender === "fem" ? textData.welcome.f : textData.welcome.m} {userData.name}</Content>
-        </>)
-      }
       <Container>
+        {userLoaded && (
+          <UserProgress>
+            <p>
+              {userData.gender === 'fem'
+                ? textData.welcome.f
+                : textData.welcome.m}{' '}
+              {userData.name}
+              {textData.progress.replace('{x}', String(userData.countVotes))}
+            </p>
+            <ProgressBar
+              completed={votesPercentage()}
+              borderRadius="6px"
+              bgColor="#DC70A3"
+              baseBgColor="#f1eaf2"
+              customLabel={`${votesPercentage()} %`}
+            />
+            <small>{textData.progressDetails}</small>
+          </UserProgress>
+        )}
         <Content>
           <header>
             <strong>Conceito de sexismo</strong>
           </header>
-          <p>
-            Para classificar o comentário apresentado, considere que sexismo é
-            todo o discurso com a intenção de ofender, diminuir, oprimir ou
-            agredir pessoas do gênero feminino.
-          </p>
+          <p>{textData.concept}</p>
           {showExemples && (
             <div>
-              <p>"Deveria sair da internet e ir pra cozinha."</p>
-              <p>"As pessoas só estão falando bem dela porque é mulher."</p>
-              <p>"Tão linda, queria ela aqui em casa."</p>
-              <p>"Essa vagabunda não devia estar falando nada."</p>
+              <p>{textData.examples[0]}</p>
+              <p>{textData.examples[1]}</p>
+              <p>{textData.examples[2]}</p>
+              <p>{textData.examples[3]}</p>
             </div>
           )}
           <button
@@ -210,20 +232,11 @@ const Dashboard: React.FC = () => {
             </p>
           )}
           {showReply && (
-            <div>
-              <small>
-                O comentário acima foi uma resposta ao comentário "
-                {commentData.replyTo}"
-              </small>
-            </div>
+            <Reply> {`${textData.reply} "${commentData.replyTo}"`} </Reply>
           )}
           {!isLoading && (
             <>
-              <p>
-                Considerando o conceito de sexismo apresentado acima, em qual
-                das classes abaixo você colocaria o{' '}
-                <strong>comentário em avaliação</strong>?
-              </p>
+              <p>{textData.question}</p>
               <VoteOptions>
                 <RadioButton isChecked={vote === 's'} htmlFor="vote-yes">
                   <input
