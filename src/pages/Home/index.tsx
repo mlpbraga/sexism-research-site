@@ -14,6 +14,7 @@ import api from '../../services/api';
 import { useToast } from '../../context/toast';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import textData from './text.json';
 
 interface CommentData {
   commentId: number;
@@ -35,6 +36,22 @@ interface CommentsResponse {
   replyTo: string;
 }
 
+interface UserData {
+  username: string;
+  name: string;
+  gender: string;
+  countVotes: number;
+}
+
+interface UsersMeResponse {
+  username: string;
+  email: string;
+  name: string;
+  birth: string;
+  gender: string;
+  countVotes: number;
+}
+
 const decodeHTML = (text: string): string => {
   const txt = document.createElement('textarea');
   txt.innerHTML = text;
@@ -47,6 +64,13 @@ const Dashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [reloadComment, setReloadComment] = useState(false);
   const [vote, setVote] = useState('');
+  const [userLoaded, setUserLoaded] = useState(false);
+  const [userData, setUserData] = useState<UserData>({
+    username: '',
+    name: '',
+    gender: '',
+    countVotes: 0,
+  });
   const [commentData, setCommentData] = useState<CommentData>({
     commentId: 0,
     newsTitle: '',
@@ -75,12 +99,32 @@ const Dashboard: React.FC = () => {
     },
     [reloadComment, commentData, addToast],
   );
+  useEffect(() =>{
+    const loadInfo = async (): Promise<void> => {
+      try {
+        const myUserRequest = await api.get<UsersMeResponse>('/users/me');
+        const myUser = myUserRequest.data;
+        setUserData({
+          username: myUser.username,
+          countVotes: myUser.countVotes,
+          name: myUser.name,
+          gender: myUser.gender,
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setUserLoaded(true);
+      }
+    };
 
+    loadInfo();
+  }, []);
   useEffect(() => {
     const loadInfo = async (): Promise<void> => {
       try {
         const response = await api.get<CommentsResponse>('/comments/random');
         const comment = response.data;
+
         setCommentData({
           commentId: comment.commentId,
           newsTitle: decodeHTML(comment.News.title),
@@ -101,6 +145,11 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <Header />
+      {
+        userLoaded && (<>
+          <Content>{userData.gender === "fem" ? textData.welcome.f : textData.welcome.m} {userData.name}</Content>
+        </>)
+      }
       <Container>
         <Content>
           <header>
@@ -115,6 +164,7 @@ const Dashboard: React.FC = () => {
             <div>
               <p>"Deveria sair da internet e ir pra cozinha."</p>
               <p>"As pessoas só estão falando bem dela porque é mulher."</p>
+              <p>"Tão linda, queria ela aqui em casa."</p>
               <p>"Essa vagabunda não devia estar falando nada."</p>
             </div>
           )}
