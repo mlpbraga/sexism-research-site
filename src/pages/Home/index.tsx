@@ -158,25 +158,6 @@ const Dashboard: React.FC = () => {
     <>
       <Header />
       <Container>
-        {userLoaded && (
-          <UserProgress>
-            <p>
-              {userData.gender === 'fem'
-                ? textData.welcome.f
-                : textData.welcome.m}{' '}
-              {userData.name}
-              {textData.progress.replace('{x}', String(userData.countVotes))}
-            </p>
-            <ProgressBar
-              completed={votesPercentage()}
-              borderRadius="6px"
-              bgColor="#DC70A3"
-              baseBgColor="#f1eaf2"
-              customLabel={`${votesPercentage()} %`}
-            />
-            <small>{textData.progressDetails}</small>
-          </UserProgress>
-        )}
         <Content>
           <header>
             <strong>Conceito de sexismo</strong>
@@ -278,6 +259,25 @@ const Dashboard: React.FC = () => {
             </>
           )}
         </Content>
+        {userLoaded && (
+          <UserProgress>
+            <p>
+              {userData.gender === 'fem'
+                ? textData.welcome.f
+                : textData.welcome.m}{' '}
+              {userData.name}
+              {textData.progress.replace('{x}', String(userData.countVotes))}
+            </p>
+            <ProgressBar
+              completed={votesPercentage()}
+              borderRadius="6px"
+              bgColor="#DC70A3"
+              baseBgColor="#f1eaf2"
+              customLabel={' '}
+            />
+            <small>{textData.progressDetails}</small>
+          </UserProgress>
+        )}
         <Footer />
       </Container>
     </>
