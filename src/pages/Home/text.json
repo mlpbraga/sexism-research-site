@@ -1,0 +1,17 @@
+{
+  "welcome": {
+    "f": "Bem vinda, ",
+    "m": "Bem vindo, "
+  },
+  "progress": "! Você já rotulou {x} comentários dos 3.588 disponíveis.",
+  "progressDetails": "Essa é a sua barra de progresso, você pode parar a qualquer momento e voltar a rotular sempre que quiser.",
+  "concept": "Para classificar o comentário apresentado, considere que sexismo é todo o discurso com a intenção de ofender, diminuir, oprimir ou agredir pessoas do gênero feminino.",
+  "examples": [
+    "Deveria sair da internet e ir pra cozinha.",
+    "As pessoas só estão falando bem dela porque é mulher.",
+    "Tão linda, queria ela aqui em casa.",
+    "Essa vagabunda não devia estar falando nada."
+  ],
+  "reply": "O comentário acima foi uma resposta ao comentário ",
+  "question": "Considerando o conceito de sexismo apresentado acima, em qual das classes abaixo você colocaria o comentário em avaliação?"
+}
