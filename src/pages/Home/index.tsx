@@ -231,7 +231,7 @@ const Dashboard: React.FC = () => {
               {`"${commentData.commentContent}"`}
             </p>
           )}
-          {showReply && (
+          {!isLoading && showReply && (
             <Reply> {`${textData.reply} "${commentData.replyTo}"`} </Reply>
           )}
           {!isLoading && (
