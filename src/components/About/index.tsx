@@ -10,8 +10,8 @@ const About: React.FC = () => (
         Coletamos diversos comentários em notícias do G1 e do UOL, afim de
         construir uma base de dados para a nossa pesquisa e queremos usar esses
         dados para fazer com que um programa seja capaz de identificar
-        automaticamente se um comentário é sexista ou não. Mas para que
-        isso seja possível, precisamos ensinar ao programa
+        automaticamente se um comentário é sexista ou não. Mas para que isso
+        seja possível, precisamos ensinar ao programa
         <strong> o que são comentários sexistas</strong>, e é ai que você entra
         :)
       </p>
@@ -22,28 +22,39 @@ const About: React.FC = () => (
         vários pontos de vista diferentes sobre os comentários, pois o que eu
         considero sexista talvez não seja sexista pra você.
       </p>
+
+      <p>
+        Esse projeto já rendeu publicações no{' '}
+        <a href="https://sol.sbc.org.br/journals/index.php/isys/article/view/1797">
+          ISYS - BRAZILIAN JOURNAL OF INFORMATION SYSTEMS
+        </a>{' '}e no{' '}
+        <a href="https://sol.sbc.org.br/index.php/brasnam/article/view/11166">
+          IX BRAZILIAN WORKSHOP ON SOCIAL NETWORK ANALYSIS AND MINING
+        </a>{' '}
+        onde foi premiado como melhor trabalho.
+      </p>
     </div>
     <div>
       <h1> Como eu posso ajudar?</h1>
       <p>
         Você pode se cadastrar aqui no site, é bem fácil! Pedimos o seu e-mail,
-        nome, data de nascimento, e pronto, você já é redirecionado para a nossa
-        tela de classificação e pode começar a rotular todos os comentários que
-        quiser. Dos dados que coletamos aqui, os únicos que são utlizados nas
-        pesquisa são os gêneros e as idades dos rotuladores, não vamos utilizar
-        seu nome e seu e-mail para nada além de te identificar dentro do nosso
-        site. Então pode se cadastrar sem medo :)
+        nome, data de nascimento, gênero, e pronto, você já é redirecionado para
+        a nossa tela de classificação e pode começar a rotular a quantidade de
+        comentários que quiser. Dos dados que coletamos aqui, os únicos que são
+        utlizados nas pesquisa são os gêneros e as idades dos rotuladores, não
+        vamos utilizar seu nome e seu e-mail para nada além de te identificar
+        dentro do nosso site. Então pode se cadastrar sem medo :)
       </p>
     </div>
     <div>
       <h1> Como funciona?</h1>
       <p>
-        Cada pessoa que se cadastra aqui será um rotulador e terá
-        acesso aos comentários da nossa base de dados. Alguns comentários
-        são selecionados e exibidos para o rotulador e ele deve indicar se os
-        comentário exibidos são sexistas ou não. A base tem cerca de
-        3200 comentários (por enquanto) e os rotuladores podem classificar
-        quantos comentários quiserem sem a obrigação de rotular todos eles.
+        Cada pessoa que se cadastra aqui será um rotulador e terá acesso aos
+        comentários da nossa base de dados. Alguns comentários são selecionados
+        e exibidos para o rotulador e ele deve indicar se os comentário exibidos
+        são sexistas ou não. A base tem cerca de 3500 comentários e os
+        rotuladores podem classificar quantos comentários quiserem sem a
+        obrigação de rotular todos eles.
       </p>
       <p>
         O rótulo final de cada comentário é atribuído utilizando a média dos
