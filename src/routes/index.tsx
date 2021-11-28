@@ -7,6 +7,7 @@ import Home from '../pages/Home';
 import Comments from '../pages/Comments';
 import News from '../pages/News';
 import About from '../pages/About';
+import Metrics from '../pages/Metrics';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -14,6 +15,7 @@ const Routes: React.FC = () => (
     <Route path="/signup" component={SignUp} />
 
     <Route path="/about" component={About} open />
+    <Route path="/metrics" component={Metrics} open />
 
     <Route path="/news/:newsId/comments" component={Comments} open />
     <Route path="/news" component={News} open />
